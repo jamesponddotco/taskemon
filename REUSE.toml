@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 James Pond <james@cipher.host>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+
+[[annotations]]
+path = [
+  ".editorconfig",
+  ".github/assets/taskemon-task-example.jpg",
+  ".github/license-3rdparty.tpl",
+  ".gitignore",
+  "LICENSE-3rdparty.csv"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 James Pond <james@cipher.host>"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "go.sum"
+precedence = "override"
+SPDX-FileCopyrightText = "2025 James Pond <james@cipher.host>"
+SPDX-License-Identifier = "EUPL-1.2"
