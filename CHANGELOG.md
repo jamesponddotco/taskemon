@@ -17,3 +17,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Initial release.
 
 ## [Unreleased]
+
+- Added support for printer Epson TM-T20III via a 'model' parameter.
+- Added 'nopokedex' parameter to skip pokedex QR code generation.

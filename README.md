@@ -23,7 +23,7 @@ PaulHoule on Hacker
 News](https://news.ycombinator.com/item?id=44257382).
 
 > [!IMPORTANT]  
-> `taskemon` only supports the Epson TM-T20II thermal printer via USB
+> `taskemon` only supports the Epson TM-T20II and TM-T20III thermal printers via USB
 > right now, and was only tested on macOS Sequoia. Patches or PRs to
 > support other models or networked printers are welcome!
 
@@ -32,7 +32,7 @@ News](https://news.ycombinator.com/item?id=44257382).
 - Prints styled task tickets with owner, category, and task description.
 - Generates a QR code linking to a random Pokémon Pokédex entry, or,
   rarely, a fun surprise.
-- Supports the Epson TM-T20II thermal printer via USB out of the box.
+- Supports the Epson TM-T20II and TM-T20III thermal printers via USB out of the box.
 
 ## Installation
 
@@ -60,10 +60,14 @@ sudo make install
 ```bash
 $ taskemon --help
 Usage of taskemon:
+  -model string
+    	the thermal printer model (TM-T20X-II or TM-T20III) (default: TM-T20X-II)
+  -nopokedex
+    	if set to true, no Pokedex QR code will be included (default: false)
   -owner string
-        the person responsible for the task
+    	the person responsible for the task
   -task string
-        the task description
+    	the task description
 ```
 
 ## Contributing

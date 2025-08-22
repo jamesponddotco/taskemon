@@ -22,7 +22,7 @@ const (
 	epsonVendorID = 0x04b8
 
 	// epsonProductID is the USB product ID for the Epson TM-T20X-II printer.
-	epsonProductID = 0x0e27
+	// epsonProductID = 0x0e27
 
 	// pokedexBaseURL is the base URL for the Pokédex.
 	pokedexBaseURL = "https://www.pokemon.com/us/pokedex/"
@@ -34,10 +34,22 @@ const (
 	numberOfPokemons = 1025
 )
 
+var (
+	epsonProductID int
+)
+
+func Use(vals ...interface{}) {
+	for _, val := range vals {
+		_ = val
+	}
+}
+
 func main() {
 	var (
-		task  = flag.String("task", "", "the task description")
-		owner = flag.String("owner", "", "the person responsible for the task")
+		task      = flag.String("task", "", "the task description")
+		owner     = flag.String("owner", "", "the person responsible for the task")
+		model     = flag.String("model", "TM-T20X-II", "the thermal printer model (TM-T20X-II or TM-T20III)")
+		noPokedex = flag.Bool("nopokedex", false, "if set to true, no Pokedex QR code will be included")
 	)
 
 	flag.Parse()
@@ -48,25 +60,35 @@ func main() {
 		os.Exit(1)
 	}
 
+	epsonProductID = 0x0e27
+
+	switch *model {
+	case "TM-T20III":
+		epsonProductID = 0x0e28
+		_ = epsonProductID
+	case "TM-T20X-II":
+		epsonProductID = 0x0e27
+		_ = epsonProductID
+	}
+
 	ctx := gousb.NewContext()
 	defer ctx.Close()
 
-	dev, err := ctx.OpenDeviceWithVIDPID(epsonVendorID, epsonProductID)
+	dev, err := ctx.OpenDeviceWithVIDPID(epsonVendorID, gousb.ID(epsonProductID))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: Cannot open USB device: %q\n", err)
-
 		os.Exit(1)
 	}
 
 	if dev == nil {
 		fmt.Fprintln(os.Stderr, "Error: Printer not found. Check USB connection and make sure the printer is turned on.")
-
 		os.Exit(1)
 	}
 
 	defer dev.Close()
 
 	intf, done, err := dev.DefaultInterface()
+
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: Cannot claim interface: %q\n", err)
 
@@ -94,7 +116,9 @@ func main() {
 
 	printer.Bold(true).Size(2, 2).Write(*task + "\n\n")
 
-	printer.QRCode(pokemonRoulette(), true, 4, escpos.QRCodeErrorCorrectionLevelH)
+	if !*noPokedex {
+		printer.QRCode(pokemonRoulette(), true, 4, escpos.QRCodeErrorCorrectionLevelH)
+	}
 
 	printer.LineFeed()
 
