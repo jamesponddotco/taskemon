@@ -60,8 +60,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// fmt.Fprintf(os.Stdout, "Printer Model:  %s\n", *model)
-
 	epsonProductID = 0x0e27
 
 	switch *model {
@@ -72,16 +70,6 @@ func main() {
 		epsonProductID = 0x0e27
 		_ = epsonProductID
 	}
-
-	// if *model == "TM-T20III" {
-	// 	epsonProductID = 0x0e28
-	// 	_ = epsonProductID
-	// } else {
-	// 	epsonProductID = 0x0e27
-	// 	_ = epsonProductID
-	// }
-
-	// fmt.Fprintf(os.Stdout, "Printer Product ID:  %s\n", gousb.ID(epsonProductID))
 
 	ctx := gousb.NewContext()
 	defer ctx.Close()
