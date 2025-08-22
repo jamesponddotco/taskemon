@@ -87,16 +87,6 @@ func main() {
 
 	defer dev.Close()
 
-	// intf := ""
-	// done := ""
-
-	// if dev != nil {
-	// 	intf, done, err := dev.DefaultInterface()
-	// 	_, _, _ = intf, done, err
-	// } else {
-	// 	intf, done, err := altDev.DefaultInterface()
-	// 	_, _, _ = intf, done, err
-	// }
 	intf, done, err := dev.DefaultInterface()
 
 	if err != nil {
